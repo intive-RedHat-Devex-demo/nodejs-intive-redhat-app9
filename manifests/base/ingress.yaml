@@ -1,0 +1,29 @@
+apiVersion: config.openshift.io/v1
+kind: Ingress
+metadata:
+  name: nodejs-intive-redhat-app9
+  namespace: demo-dev
+  labels:
+    app: nodejs-intive-redhat-app9
+    app.kubernetes.io/component: backstage
+    backstage.io/kubernetes-id: demo-dev
+    argocd.argoproj.io/instance: nodejs-intive-redhat-app9
+    argocd/app-name: nodejs-intive-redhat-app9
+    argocd/app-selector: nodejs-intive-redhat-app9
+spec:
+  ingressClassName: nginx
+  tls:
+    - hosts:
+        - "https://nodejs-intive-redhat-app9-demo-dev-apps.rosa.e5n9l5l2t8z7q0d.qnbq.p3.openshiftapps.com"
+      secretName: nodejs-intive-redhat-app9-tls
+  rules:
+  - host: "https://nodejs-intive-redhat-app9-demo-dev-apps.rosa.e5n9l5l2t8z7q0d.qnbq.p3.openshiftapps.com"
+    http:
+      paths:
+        - path: /
+          pathType: Prefix
+          backend:
+            service:
+              name: nodejs-intive-redhat-app9
+              port:
+                number: 3000
